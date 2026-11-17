@@ -24,7 +24,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-geri60saude}
       SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-geri60}
       SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
-      APP_CORS_ORIGINS: ${APP_CORS_ORIGINS:-http://localhost:3021}
+      APP_CORS_ORIGINS: ${APP_CORS_ORIGINS:-https://geri60saude.professor-anderson.com}
       PORT: 8080
     depends_on:
       db:
@@ -41,7 +41,7 @@ services:
     depends_on:
       - api
     ports:
-      - "3021:3021"
+      - "127.0.0.1:3021:3021"
     networks: [geri60]
 
 volumes:

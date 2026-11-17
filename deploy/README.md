@@ -40,6 +40,38 @@ sudo systemctl reload nginx
 
 Acesse `http://IP_DA_VPS:3021`. Se existir firewall UFW, libere a porta com `sudo ufw allow 3021/tcp`. Para HTTPS com domínio, troque `server_name _` pelo domínio, adicione os certificados e redirecione 80 para 443; a aplicação continua internamente no mesmo root e proxy.
 
+## Subdomínio e Certbot
+
+Crie no DNS um registro `A` para `geri60saude.professor-anderson.com` apontando para o IP público da VPS. Se houver IPv6, crie também um registro `AAAA`; caso contrário, remova qualquer `AAAA` incorreto para não quebrar a validação.
+
+Para o stack Docker, mantenha o container publicado como `127.0.0.1:3021:3021` e use o Nginx do host como proxy HTTPS:
+
+```bash
+sudo apt install -y nginx certbot python3-certbot-nginx
+sudo mkdir -p /var/www/certbot
+
+sudo cp deploy/nginx/geri60saude-subdomain-bootstrap.conf \
+  /etc/nginx/sites-available/geri60saude.professor-anderson.com.conf
+sudo ln -sfn \
+  /etc/nginx/sites-available/geri60saude.professor-anderson.com.conf \
+  /etc/nginx/sites-enabled/geri60saude.professor-anderson.com.conf
+sudo nginx -t
+sudo systemctl reload nginx
+
+sudo certbot certonly --webroot -w /var/www/certbot \
+  -d geri60saude.professor-anderson.com \
+  --agree-tos --no-eff-email \
+  -m seu-email@example.com
+
+sudo cp deploy/nginx/geri60saude-subdomain.conf \
+  /etc/nginx/sites-available/geri60saude.professor-anderson.com.conf
+sudo nginx -t
+sudo systemctl reload nginx
+sudo certbot renew --dry-run
+```
+
+Libere somente HTTP/HTTPS no firewall quando usar o domínio: `sudo ufw allow 80/tcp`, `sudo ufw allow 443/tcp`. A porta `3021` fica no loopback e não precisa ser liberada publicamente. O Certbot instala/usa o timer de renovação automática; o `certbot renew --dry-run` valida o fluxo.
+
 ## 4. Backend como serviço
 
 ```bash
