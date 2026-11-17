@@ -14,6 +14,13 @@ docker compose -f docker-compose.vps.yml ps
 curl http://127.0.0.1:3021/
 ```
 
+Depois de atualizar o frontend, recrie a imagem para aplicar assets estáticos como o favicon:
+
+```bash
+docker compose -f docker-compose.vps.yml build --no-cache frontend
+docker compose -f docker-compose.vps.yml up -d --force-recreate frontend
+```
+
 O arquivo `.env` precisa ter uma senha forte em `POSTGRES_PASSWORD`. Não publique o PostgreSQL nem a porta 8080 no firewall. Com o Nginx/Certbot configurado, o acesso externo é `https://geri60saude.professor-anderson.com`; a porta 3021 fica somente no loopback.
 
 ## Atualizar depois de um git pull
