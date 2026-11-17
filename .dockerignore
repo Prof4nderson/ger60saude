@@ -1,0 +1,9 @@
+.git
+node_modules
+dist
+.output
+.nitro
+.env
+.env.*
+backend/target
+*.log

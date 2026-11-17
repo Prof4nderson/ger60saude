@@ -1,0 +1,10 @@
+{
+  "routes": [
+    { "path": "/", "title": "Painel" },
+    { "path": "/saude", "title": "Saúde" },
+    { "path": "/rotina", "title": "Rotina" },
+    { "path": "/agenda", "title": "Agenda" },
+    { "path": "/diario", "title": "Diário" },
+    { "path": "/configuracoes", "title": "Configurações" }
+  ]
+}

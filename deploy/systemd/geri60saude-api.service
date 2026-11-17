@@ -1,0 +1,19 @@
+[Unit]
+Description=Geri60+ Saúde API (Spring Boot)
+After=network.target
+
+[Service]
+Type=simple
+User=geri60
+Group=geri60
+WorkingDirectory=/opt/geri60saude/backend
+EnvironmentFile=/etc/geri60saude/backend.env
+ExecStart=/usr/bin/java -jar /opt/geri60saude/backend/target/geri60saude-api-0.1.0.jar
+SuccessExitStatus=143
+Restart=always
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

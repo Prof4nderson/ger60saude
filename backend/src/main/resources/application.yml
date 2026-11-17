@@ -1,0 +1,34 @@
+server:
+  port: ${PORT:8080}
+  forward-headers-strategy: framework
+spring:
+  application:
+    name: geri60saude-api
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/geri60saude}
+    username: ${SPRING_DATASOURCE_USERNAME:geri60}
+    password: ${SPRING_DATASOURCE_PASSWORD:geri60}
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc.time_zone: UTC
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+app:
+  cors:
+    allowed-origins: ${APP_CORS_ORIGINS:http://localhost:3000}

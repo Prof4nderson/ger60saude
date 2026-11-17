@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.env.*
+backend/target/
+.output/
+.nitro/
+.DS_Store

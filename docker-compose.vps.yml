@@ -1,0 +1,52 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-geri60saude}
+      POSTGRES_USER: ${POSTGRES_USER:-geri60}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?defina POSTGRES_PASSWORD no .env}
+    volumes:
+      - geri60_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    networks: [geri60]
+
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-geri60saude}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-geri60}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD}
+      APP_CORS_ORIGINS: ${APP_CORS_ORIGINS:-http://localhost:3021}
+      PORT: 8080
+    depends_on:
+      db:
+        condition: service_healthy
+    expose:
+      - "8080"
+    networks: [geri60]
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "3021:3021"
+    networks: [geri60]
+
+volumes:
+  geri60_pgdata:
+
+networks:
+  geri60:
+    driver: bridge
