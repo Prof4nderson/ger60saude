@@ -44,7 +44,7 @@ Acesse `http://IP_DA_VPS:3021`. Se existir firewall UFW, libere a porta com `sud
 
 Crie no DNS um registro `A` para `geri60saude.professor-anderson.com` apontando para o IP público da VPS. Se houver IPv6, crie também um registro `AAAA`; caso contrário, remova qualquer `AAAA` incorreto para não quebrar a validação.
 
-Para o stack Docker, mantenha o container publicado como `127.0.0.1:3027:3021` e use o Nginx do host como proxy HTTPS para o domínio:
+Para o stack Docker, mantenha o container publicado como `127.0.0.1:3027:80` e use o Nginx do host como proxy HTTPS para o domínio:
 
 ```bash
 sudo apt install -y nginx certbot python3-certbot-nginx

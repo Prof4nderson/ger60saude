@@ -1,6 +1,6 @@
 # Geri60+ Saúde em Docker na VPS
 
-O stack usa três containers numa rede privada: `frontend` (Nginx, publicado em `127.0.0.1:3027` e ouvindo internamente em `3021`), `api` (Spring Boot, somente na rede Docker em `8080`) e `db` (PostgreSQL, sem porta pública).
+O stack usa três containers numa rede privada: `frontend` (Nginx, publicado em `127.0.0.1:3027` e ouvindo internamente em `80`), `api` (Spring Boot, somente na rede Docker em `8080`) e `db` (PostgreSQL, sem porta pública).
 
 ## Primeira subida
 
@@ -43,4 +43,4 @@ curl http://127.0.0.1:3027/api/health
 
 ## HTTPS
 
-Para domínio e TLS, coloque o Nginx do host em 80/443 fazendo proxy para `127.0.0.1:3027`. O compose usa `127.0.0.1:3027:3021`; a configuração pronta do subdomínio está em `deploy/nginx/geri60saude-subdomain.conf` e o passo a passo do Certbot está em `deploy/README.md`.
+Para domínio e TLS, coloque o Nginx do host em 80/443 fazendo proxy para `127.0.0.1:3027`. O compose usa `127.0.0.1:3027:80`; a configuração pronta do subdomínio está em `deploy/nginx/geri60saude-subdomain.conf` e o passo a passo do Certbot está em `deploy/README.md`.

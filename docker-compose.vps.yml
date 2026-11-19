@@ -41,7 +41,7 @@ services:
     depends_on:
       - api
     ports:
-      - "127.0.0.1:3027:3021"
+      - "127.0.0.1:3027:80"
     networks: [geri60]
 
 volumes:
