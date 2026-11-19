@@ -6,8 +6,8 @@ spring:
     name: geri60saude-api
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/geri60saude}
-    username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:123456}
+    username: ${SPRING_DATASOURCE_USERNAME:geri60}
+    password: ${SPRING_DATASOURCE_PASSWORD:geri60}
     hikari:
       maximum-pool-size: 10
   jpa:

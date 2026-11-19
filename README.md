@@ -37,6 +37,6 @@ O Preview atual é um MVP demonstrável com dados locais e contratos de API prep
 
 ## Deploy em VPS
 
-As configurações de produção estão em [`deploy/README.md`](/home/ubuntu/geri60saude/deploy/README.md). O Nginx serve o frontend na porta `3021`, encaminha `/api` para o Spring Boot em `8080` e usa o symlink `sites-enabled/geri60saude.conf`.
+As configurações de produção estão em [`deploy/README.md`](/home/ubuntu/geri60saude/deploy/README.md). No Docker da VPS, o frontend escuta internamente na porta `3021` e é publicado em `127.0.0.1:3027`; o Nginx do domínio encaminha para `127.0.0.1:3027` e o `/api` segue para o Spring Boot em `8080`.
 
 Para subir tudo em Docker na VPS, copie `.env.vps.example` para `.env` e execute `docker compose -f docker-compose.vps.yml up -d --build`. O domínio HTTPS previsto é `https://geri60saude.professor-anderson.com`; o guia completo está em [`deploy/docker/README.md`](/home/ubuntu/geri60saude/deploy/docker/README.md) e [`deploy/README.md`](/home/ubuntu/geri60saude/deploy/README.md).

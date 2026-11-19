@@ -44,7 +44,7 @@ Acesse `http://IP_DA_VPS:3021`. Se existir firewall UFW, libere a porta com `sud
 
 Crie no DNS um registro `A` para `geri60saude.professor-anderson.com` apontando para o IP público da VPS. Se houver IPv6, crie também um registro `AAAA`; caso contrário, remova qualquer `AAAA` incorreto para não quebrar a validação.
 
-Para o stack Docker, mantenha o container publicado como `127.0.0.1:3021:3021` e use o Nginx do host como proxy HTTPS:
+Para o stack Docker, mantenha o container publicado como `127.0.0.1:3027:3021` e use o Nginx do host como proxy HTTPS para o domínio:
 
 ```bash
 sudo apt install -y nginx certbot python3-certbot-nginx
@@ -70,7 +70,7 @@ sudo systemctl reload nginx
 sudo certbot renew --dry-run
 ```
 
-Libere somente HTTP/HTTPS no firewall quando usar o domínio: `sudo ufw allow 80/tcp`, `sudo ufw allow 443/tcp`. A porta `3021` fica no loopback e não precisa ser liberada publicamente. O Certbot instala/usa o timer de renovação automática; o `certbot renew --dry-run` valida o fluxo.
+Libere somente HTTP/HTTPS no firewall quando usar o domínio: `sudo ufw allow 80/tcp`, `sudo ufw allow 443/tcp`. A porta externa `3027` fica no loopback e não precisa ser liberada publicamente. O Certbot instala/usa o timer de renovação automática; o `certbot renew --dry-run` valida o fluxo.
 
 ## 4. Backend como serviço
 
